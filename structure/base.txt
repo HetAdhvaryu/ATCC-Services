@@ -1,0 +1,46 @@
+legacy-font-converter/
+│
+├── README.md
+├── PRD.md
+├── ARCHITECTURE.md
+├── LICENSE
+├── .gitignore
+│
+├── core/
+│   ├── __init__.py
+│   ├── engine.py              # Conversion pipeline
+│   ├── rule_engine.py         # Rule execution logic
+│   ├── exceptions.py
+│
+├── profiles/
+│   ├── gujarati/
+│   │   ├── bhasha_bharti.json
+│   │   ├── terafont_varun.json
+│   │   ├── unicode.json
+│   │   └── rules.json
+│   │
+│   └── README.md              # How to add new fonts
+│
+├── desktop/
+│   ├── gui.py                 # Tkinter UI
+│   ├── app.py                 # Desktop entry point
+│   └── packaging/
+│       └── pyinstaller.spec
+│
+├── api/
+│   ├── main.py                # FastAPI app (future)
+│   └── schemas.py
+│
+├── tests/
+│   ├── samples/
+│   ├── test_gujarati.py
+│   └── test_rules.py
+│
+├── scripts/
+│   ├── extract_mapping.py     # Dev utilities
+│   └── validate_output.py
+│
+└── docs/
+    ├── roadmap.md
+    ├── licensing.md
+    └── faq.md
