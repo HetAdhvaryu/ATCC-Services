@@ -1,0 +1,108 @@
+
+---
+
+# 📄 `PRD.md` (Product Requirements Document)
+
+```markdown
+# Product Requirements Document (PRD)
+
+## Product Name
+Legacy Font Converter
+
+---
+
+## Problem Statement
+
+Indian legal and DTP ecosystems still rely heavily on legacy (non-Unicode) fonts.
+Operators are highly trained in these fonts, and retraining them is impractical.
+
+Existing conversion tools are:
+- Expensive
+- Closed-source
+- Inflexible
+- Often inaccurate for legal use
+
+---
+
+## Product Goals
+
+- Preserve existing typing workflows
+- Produce legally compliant output fonts
+- Provide deterministic, accurate conversions
+- Support both offline desktop and online service models
+- Enable future expansion to multiple scripts
+
+---
+
+## Target Users
+
+- Court DTP shops
+- Typing bureaus
+- Legal documentation vendors
+- Digitization agencies
+- Small publishers
+
+---
+
+## In Scope (Phase 1)
+
+- Gujarati script support
+- Bhasha Bharti → Terafont Varun conversion
+- Desktop application (offline)
+- Text-based conversion (copy-paste)
+- Deterministic output
+
+---
+
+## Out of Scope (Phase 1)
+
+- OCR or scanned document processing
+- PDF layout preservation
+- Font distribution
+- Cloud-only dependency
+
+---
+
+## Functional Requirements
+
+1. Convert legacy font text deterministically
+2. Preserve matras, reph, and conjuncts
+3. Support documents up to 100 pages
+4. Simple UI usable by non-technical operators
+5. Batch-safe conversion logic
+
+---
+
+## Non-Functional Requirements
+
+- Offline operation
+- Cross-platform compatibility
+- No internet dependency
+- Fast processing (< 1 second per page)
+- High reliability and repeatability
+
+---
+
+## Success Metrics
+
+- Zero character loss
+- Legal document acceptance
+- <1% manual correction rate
+- Stable output across machines
+
+---
+
+## Risks
+
+- Incorrect rule ordering
+- Incomplete mapping tables
+- User selecting wrong source font
+
+---
+
+## Mitigations
+
+- Script-aware rule engine
+- Extensive test corpus
+- Clear UI font selection
+- Incremental rollout of font profiles
