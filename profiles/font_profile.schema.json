@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Legacy Font Profile",
+  "type": "object",
+  "required": [
+    "id",
+    "font",
+    "script",
+    "encoding",
+    "mapping",
+    "rules"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the font profile"
+    },
+    "font": {
+      "type": "object",
+      "required": ["name", "type"],
+      "properties": {
+        "name": { "type": "string" },
+        "type": {
+          "type": "string",
+          "enum": ["legacy", "unicode"]
+        },
+        "vendor": { "type": "string" },
+        "notes": { "type": "string" }
+      }
+    },
+    "script": {
+      "type": "object",
+      "required": ["name", "iso"],
+      "properties": {
+        "name": { "type": "string" },
+        "iso": { "type": "string" }
+      }
+    },
+    "encoding": {
+      "type": "object",
+      "required": ["base"],
+      "properties": {
+        "base": {
+          "type": "string",
+          "enum": ["ascii", "unicode"]
+        },
+        "range": {
+          "type": "string",
+          "description": "Optional ASCII range used by the font"
+        }
+      }
+    },
+    "rules": {
+      "type": "array",
+      "description": "Ordered list of rule set IDs to apply",
+      "items": { "type": "string" }
+    },
+    "mapping": {
+      "type": "object",
+      "description": "Character or token mapping table",
+      "additionalProperties": { "type": "string" }
+    }
+  }
+}
