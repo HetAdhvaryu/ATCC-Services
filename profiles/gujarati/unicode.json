@@ -1,0 +1,20 @@
+{
+  "id": "gu_unicode_v1",
+  "font": {
+    "name": "Gujarati Unicode",
+    "type": "unicode",
+    "vendor": "Unicode Consortium",
+    "notes": "Standard Unicode Gujarati block"
+  },
+  "script": {
+    "name": "Gujarati",
+    "iso": "gu"
+  },
+  "encoding": {
+    "base": "unicode"
+  },
+  "rules": [
+    "gu_unicode_normalization"
+  ],
+  "mapping": {}
+}
