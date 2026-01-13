@@ -1,0 +1,22 @@
+{
+  "gu_reph": {
+    "description": "Handle reph (ર્) positioning",
+    "order": 1,
+    "pattern": "R(.)",
+    "replace": "\\1R"
+  },
+  "gu_prebase_matra": {
+    "description": "Handle pre-base matra (િ)",
+    "order": 2,
+    "pattern": "i(.)",
+    "replace": "\\1i"
+  },
+  "gu_conjuncts": {
+    "description": "Normalize conjunct glyphs",
+    "order": 3,
+    "replacements": {
+      "x": "kS",
+      "t": "tr"
+    }
+  }
+}
