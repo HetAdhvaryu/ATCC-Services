@@ -185,25 +185,4 @@ If you are unsure about a mapping:
 ## ✅ Final Reminder
 
 A font profile is data, not code.
-
 Treat it with the same care you would treat legal documents.
-
----
-
-## 🔜 Next best step
-Now that profiles are well-defined, I strongly recommend:
-
-👉 **Implementing the profile loader + validator**  
-This will:
-- Prevent broken profiles
-- Catch errors early
-- Enforce discipline
-
-If you want, I can write:
-- `profile_loader.py`
-- JSON schema validation code
-- Runtime safety checks
-
-Just say the word.
-
-
