@@ -34,7 +34,7 @@ This project solves that problem without forcing users to relearn typing.
 
 ## 🚀 Quick Start (Developer)
 ```bash
-git clone https://github.com/your-org/legacy-font-converter.git
+git clone https://github.com/HetAdhvaryu/ATCC-Services.git
 cd legacy-font-converter
 python desktop/app.py
 ```
