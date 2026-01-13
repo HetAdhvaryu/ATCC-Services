@@ -1,66 +1,209 @@
-# Legacy Font Converter
+# Font Profiles
 
-A cross-platform, offline-first engine for converting Indian legacy (non-Unicode)
-fonts into other legacy fonts or Unicode, with legal-document accuracy.
+This directory contains **font profiles** used by the Legacy Font Converter engine.
 
----
+A font profile is a **data-only definition** that describes how characters encoded
+in a specific font should be interpreted and converted.
 
-## 🎯 Why This Exists
-
-Millions of legal, court, and administrative documents in India are still typed
-using legacy fonts due to years of operator muscle memory. However, modern workflows
-often mandate specific fonts or Unicode compliance.
-
-Re-typing or retraining is costly, slow, and error-prone.
-
-This project allows users to **continue typing in familiar fonts** while producing
-**compliant output fonts**.
+No executable logic lives here.
 
 ---
 
-## ✨ Key Features
+## 📌 Core Principles
 
-- Legacy → Legacy font conversion
-- Legacy → Unicode → Legacy safe pipeline
-- Script-aware rule engine
-- Offline desktop application
-- Cross-platform (Windows, Linux, macOS)
-- Designed for legal and government documents
-- Extensible font profile system
+- **No fonts are distributed** in this repository
+- Profiles contain **only mapping data and metadata**
+- All mappings must be **original and independently derived**
+- Profiles must be **script-aware**
+- Rule execution order is **strict and non-negotiable**
 
 ---
 
-## 🧠 Supported Scripts (Initial)
+## 📁 Directory Structure
 
-- Gujarati
-  - Bhasha Bharti
-  - Terafont Varun
-  - Unicode Gujarati
+profiles/
+│
+├── gujarati/
+│ ├── bhasha_bharti.json
+│ ├── terafont_varun.json
+│ ├── unicode.json
+│ └── rules.json
+│
+└── README.md
+
+
+Each script has its own directory.
 
 ---
 
-## 🖥 Platforms
+## 🧠 What Is a Font Profile?
 
-- Windows (primary)
-- Linux
-- macOS
+A font profile defines:
+- Font metadata
+- Script identity
+- Encoding type (legacy or Unicode)
+- Mapping table
+- Applicable rule sets
+
+Profiles are consumed by the core engine at runtime.
 
 ---
 
-## 🚀 Quick Start (Development)
+## 🧩 Font Profile Fields (Summary)
 
-```bash
-git clone https://github.com/your-org/legacy-font-converter.git
-cd legacy-font-converter
-python desktop/app.py
+| Field | Description |
+|------|-------------|
+| `id` | Unique identifier for the profile |
+| `font.name` | Display name of the font |
+| `font.type` | `legacy` or `unicode` |
+| `script.iso` | ISO 639-1 code (e.g. `gu`) |
+| `encoding.base` | `ascii` or `unicode` |
+| `rules` | Ordered rule IDs |
+| `mapping` | Character/token mapping table |
+
+---
+
+## ⚙️ Rules vs Mapping (Very Important)
+
+### Rules
+- Handle **structural behavior**
+- Examples:
+  - Reph (ર્)
+  - Pre-base matra (િ)
+  - Conjunct normalization
+- Defined once per script
+- Reused across fonts
+
+### Mapping
+- Handles **glyph-to-glyph translation**
+- Font-specific
+- Must NOT contain logic
+
+---
+
+## 🛠️ How to Add a New Font (Step-by-Step)
+
+### 1️⃣ Identify the Script
+Create or reuse a script folder:
+profiles/<script_name>/
+
+Example:
+profiles/gujarati/
+
+
+---
+
+### 2️⃣ Create Font Profile JSON
+Create a new file:
+<font_name>.json
+Example:
+terafont_varun.json
+
+
+Follow the font profile schema strictly.
+
+---
+
+### 3️⃣ Define Mapping Table (Safely)
+
+✔ Create mappings by:
+- Typing known syllables in the source font
+- Observing raw character output
+- Mapping to known script tokens or target encoding
+
+❌ Do NOT:
+- Copy mappings from paid or cracked tools
+- Reverse-engineer proprietary software
+- Bundle font files
+
+---
+
+### 4️⃣ Assign Rule Sets
+Reference existing rule IDs from `rules.json`.
+
+Example:
+```json
+"rules": [
+  "gu_reph",
+  "gu_prebase_matra",
+  "gu_conjuncts"
+]
 ```
 
-## important Notes
+### 5️⃣ Validate the Profile
 
-This project does NOT distribute fonts.
+Before committing:
+- Profile loads without errors
+- Rule IDs exist
+- Mapping table contains no duplicates
+- Script ISO matches directory name
 
-Users must install required fonts separately.
+## 🧪 Testing Requirements
 
-Conversion accuracy depends on selecting the correct source font.
+Every new font profile MUST include:
+- Sample input text
+- Expected output text
+- Coverage for:
+  - Matras
+  - Reph
+  - Conjuncts
 
-Designed for text-based workflows (copy-paste / TXT).
+Add tests under:
+tests/samples/
+
+## ⚠️ Legal & Ethical Requirements
+
+- Do NOT distribute font binaries
+- Do NOT copy mappings from proprietary tools
+- Do NOT accept community contributions without review
+- Profiles violating these rules will be removed
+
+## 🧭 Best Practices
+
+- Keep mappings minimal and explicit
+- Prefer Unicode as an intermediate format
+- Version profiles when changing mappings
+- Document known limitations in font.notes
+
+## 📦 Versioning Strategy
+
+If mappings change:
+- Increment profile version in id
+- Keep old profile for backward compatibility
+
+Example:
+gu_bhasha_bharti_v2
+
+## 📞 Support & Contributions
+
+This project prioritizes accuracy over speed.
+If you are unsure about a mapping:
+- Open an issue
+- Attach sample text
+- Do NOT guess
+
+## ✅ Final Reminder
+
+A font profile is data, not code.
+
+Treat it with the same care you would treat legal documents.
+
+---
+
+## 🔜 Next best step
+Now that profiles are well-defined, I strongly recommend:
+
+👉 **Implementing the profile loader + validator**  
+This will:
+- Prevent broken profiles
+- Catch errors early
+- Enforce discipline
+
+If you want, I can write:
+- `profile_loader.py`
+- JSON schema validation code
+- Runtime safety checks
+
+Just say the word.
+
+
