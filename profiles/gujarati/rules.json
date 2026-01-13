@@ -18,5 +18,10 @@
       "x": "kS",
       "t": "tr"
     }
+  },
+   "gu_dummy_rule": {
+    "description": "No-op test rule",
+    "pattern": "(.)",
+    "replace": "\\1"
   }
 }

@@ -20,11 +20,8 @@
     "gu_conjuncts"
   ],
   "mapping": {
-    "A": "KA",
-    "B": "KHA",
-    "C": "GA",
-    "k": "AA_SIGN",
-    "l": "I_SIGN"
+     "A": "X",
+     "B": "Y"
   }
 }
 

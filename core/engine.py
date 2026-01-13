@@ -1,17 +1,10 @@
 """
 Conversion Engine
 
-This module orchestrates the full font conversion pipeline:
-- Profile loading
-- Rule execution
-- Character mapping
-- Optional Unicode bridging
-
-This is the SINGLE entry point for all conversions.
+Single orchestration point for font conversion.
 """
 
 from __future__ import annotations
-
 from typing import Dict
 
 from core.rule_engine import RuleEngine
@@ -21,12 +14,6 @@ from core.exceptions import ProfileValidationError
 class ConversionEngine:
     """
     Orchestrates font conversion using profiles and rules.
-
-    Responsibilities:
-    - Apply script rules in correct order
-    - Apply character mappings
-    - Support legacy ↔ legacy and legacy ↔ unicode
-    - Fail fast on invalid configurations
     """
 
     def __init__(
@@ -48,45 +35,39 @@ class ConversionEngine:
             enable_debug=enable_debug
         )
 
-    # ---------------------------------------------------------
+    # =========================
     # Public API
-    # ---------------------------------------------------------
+    # =========================
 
     def convert(self, text: str) -> str:
-        """
-        Convert text from source font to target font.
-
-        :param text: Input text (plain string)
-        :return: Converted text
-        """
         if not text:
             return text
 
-        # Step 1: Apply source rules (normalize structure)
+        # 1. Apply source rules
         text = self.rule_engine.apply(
             text=text,
             rule_ids=self.source["rules"]
         )
 
-        # Step 2: Apply source → intermediate mapping
+        # 2. Source → intermediate mapping
         text = self._apply_mapping(
-            text,
-            self.source,
-            direction="forward"
+            text=text,
+            profile=self.source,
+            reverse=False
         )
 
-        # Step 3: If Unicode bridge required, normalize
+        # 3. Unicode bridge (future-safe)
         if self._requires_unicode_bridge():
             text = self._unicode_normalize(text)
 
-        # Step 4: Apply intermediate → target mapping
+        # 4. Intermediate → target mapping
         text = self._apply_mapping(
-            text,
-            self.target,
-            direction="reverse"
+            text=text,
+            profile=self.target,
+            reverse=True
         )
 
-        # Step 5: Apply target rules (rare but supported)
+        # 5. Target rules (rare, but supported)
         if self.target["rules"]:
             text = self.rule_engine.apply(
                 text=text,
@@ -95,14 +76,55 @@ class ConversionEngine:
 
         return text
 
-    # ---------------------------------------------------------
-    # Internal logic
-    # ---------------------------------------------------------
+    # =========================
+    # Internal helpers
+    # =========================
 
     def _validate_profiles(self):
-        """
-        Ensures source and target profiles are compatible.
-        """
         if self.source["script"]["iso"] != self.target["script"]["iso"]:
             raise ProfileValidationError(
                 "Source and target scripts do not match"
+            )
+
+        if (
+            self.source["font"]["type"] == "unicode"
+            and self.target["font"]["type"] == "unicode"
+        ):
+            raise ProfileValidationError(
+                "Unicode to Unicode conversion is not supported"
+            )
+
+    def _requires_unicode_bridge(self) -> bool:
+        return (
+            self.source["font"]["type"] == "legacy"
+            and self.target["font"]["type"] == "legacy"
+        )
+
+    def _apply_mapping(
+        self,
+        text: str,
+        profile: dict,
+        reverse: bool
+    ) -> str:
+        mapping = profile.get("mapping", {})
+        if not mapping:
+            return text
+
+        if reverse:
+            mapping = self._reverse_mapping(mapping)
+
+        return "".join(mapping.get(ch, ch) for ch in text)
+
+    def _reverse_mapping(self, mapping: dict) -> dict:
+        reversed_map = {}
+        for src, tgt in mapping.items():
+            if tgt in reversed_map:
+                raise ProfileValidationError(
+                    f"Ambiguous reverse mapping for value: {tgt}"
+                )
+            reversed_map[tgt] = src
+        return reversed_map
+
+    def _unicode_normalize(self, text: str) -> str:
+        # Placeholder for future NFC/NFD normalization
+        return text

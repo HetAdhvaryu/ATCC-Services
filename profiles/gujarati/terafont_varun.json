@@ -1,0 +1,19 @@
+{
+  "id": "gu_terafont_varun_v1",
+  "font": {
+    "name": "Terafont Varun",
+    "type": "legacy"
+  },
+  "script": {
+    "name": "Gujarati",
+    "iso": "gu"
+  },
+  "encoding": {
+    "base": "ascii"
+  },
+  "rules": [],
+  "mapping": {
+    "X": "ક",
+    "Y": "ખ"
+  }
+}
