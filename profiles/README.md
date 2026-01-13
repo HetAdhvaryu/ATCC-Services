@@ -53,4 +53,14 @@ This project allows users to **continue typing in familiar fonts** while produci
 git clone https://github.com/your-org/legacy-font-converter.git
 cd legacy-font-converter
 python desktop/app.py
+```
 
+## important Notes
+
+This project does NOT distribute fonts.
+
+Users must install required fonts separately.
+
+Conversion accuracy depends on selecting the correct source font.
+
+Designed for text-based workflows (copy-paste / TXT).
