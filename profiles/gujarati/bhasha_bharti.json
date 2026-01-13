@@ -1,1 +1,30 @@
+{
+  "id": "gu_bhasha_bharti_v1",
+  "font": {
+    "name": "Bhasha Bharti",
+    "type": "legacy",
+    "vendor": "Unknown",
+    "notes": "Widely used legacy Gujarati font in DTP and court work"
+  },
+  "script": {
+    "name": "Gujarati",
+    "iso": "gu"
+  },
+  "encoding": {
+    "base": "ascii",
+    "range": "32-126"
+  },
+  "rules": [
+    "gu_reph",
+    "gu_prebase_matra",
+    "gu_conjuncts"
+  ],
+  "mapping": {
+    "A": "KA",
+    "B": "KHA",
+    "C": "GA",
+    "k": "AA_SIGN",
+    "l": "I_SIGN"
+  }
+}
 
